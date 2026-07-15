@@ -27,4 +27,32 @@ public class Movment : MonoBehaviour
     {
         rb2d.linearVelocity = rb2d.linearVelocity.normalized * speed;
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("AI") || collision.gameObject.CompareTag("Player"))
+        {
+            float hitPosition = transform.position.x - collision.transform.position.x;
+
+            float normalizedHitPosition = hitPosition / collision.collider.bounds.extents.x;
+
+            float verticalDirection;
+
+            if (collision.gameObject.CompareTag("AI"))
+            {
+                verticalDirection = -1;
+            }
+            else
+            {
+                verticalDirection = 1;
+            }
+
+            Vector2 direction = new Vector2(
+                normalizedHitPosition,
+                verticalDirection
+            ).normalized;
+
+            rb2d.linearVelocity = direction * speed;
+        }
+    }
 }
