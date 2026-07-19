@@ -3,6 +3,7 @@ using UnityEngine;
 public class Movment : MonoBehaviour
 {
     public float speed = 5.0f;
+    public Manager scoreManager;
     private Rigidbody2D rb2d;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -53,6 +54,17 @@ public class Movment : MonoBehaviour
             ).normalized;
 
             rb2d.linearVelocity = direction * speed;
+
+        }
+
+        if (collision.gameObject.CompareTag("Ceiling"))
+        {
+            scoreManager.AddAIScore();
+        }
+            
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            scoreManager.AddPlayerScore();
         }
     }
 }
